@@ -1,0 +1,21 @@
+{
+  "config": {
+    "flow_title": "SunEclipse Balies",
+    "step": {
+      "user": {
+        "title": "SunEclipse Balies instellen",
+        "data": {
+          "name": "Naam",
+          "url": "Endpoint URL"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan de endpoint niet bereiken",
+      "invalid_payload": "Endpoint gaf geen geldig balies.json formaat terug"
+    },
+    "abort": {
+      "single_instance_allowed": "SunEclipse Balies is al geconfigureerd"
+    }
+  }
+}

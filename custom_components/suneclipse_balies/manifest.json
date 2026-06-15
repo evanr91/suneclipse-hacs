@@ -1,0 +1,16 @@
+{
+  "domain": "suneclipse_balies",
+  "name": "SunEclipse Balies",
+  "codeowners": [
+    "@evan"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/evanr91/suneclipse-hacs",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "loggers": [
+    "custom_components.suneclipse_balies"
+  ],
+  "requirements": [],
+  "version": "0.1.0"
+}
