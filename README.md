@@ -113,7 +113,7 @@ yaxis:
     opposite: true
     decimals: 2
     min: 0
-    max: 3.5
+    max: 25
   - id: balies
     decimals: 0
     min: 0
