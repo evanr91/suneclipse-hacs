@@ -4,7 +4,7 @@ Custom Home Assistant integratie voor `https://www.suneclipse.nl/balies.json`.
 
 Repository: `https://github.com/evanr91/suneclipse-hacs`
 
-- Polling elke 15 seconden
+- Polling elke 60 seconden
 - Sensoren voor `balies`, `max-balies`, `load`
 - Extra status-sensor met formaat: `balies/max-balies - load`
 
