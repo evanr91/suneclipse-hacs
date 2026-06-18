@@ -30,6 +30,9 @@ Na installatie krijg je deze entities:
 - `sensor.suneclipse_balies_balies`
 - `sensor.suneclipse_balies_max_balies`
 - `sensor.suneclipse_balies_load`
+- `sensor.suneclipse_balies_disk_vrij`
+- `sensor.suneclipse_balies_mem_vrij`
+- `sensor.suneclipse_balies_verzoeken_per_sec`
 - `sensor.suneclipse_balies_status`
 
 ## Lovelace voorbeelden (standaard Home Assistant)
@@ -146,6 +149,92 @@ series:
 ```
 
 Voor een server met 4 cores is `load = 3.5` een nette bovengrens om aan te houden.
+
+## Extra advanced charts
+
+**Disk vrij (links) en Mem vrij (rechts)**
+
+```yaml
+type: custom:apexcharts-card
+update_interval: 15s
+header:
+  show: true
+  title: Disk en mem vrij (laatste 3 uur)
+graph_span: 3h
+span:
+  end: minute
+now:
+  show: true
+  color: "#888888"
+  label: Nu
+yaxis:
+  - id: disk
+    decimals: 1
+    min: 0
+  - id: mem
+    opposite: true
+    decimals: 1
+    min: 0
+series:
+  - entity: sensor.suneclipse_balies_disk_vrij
+    name: Disk vrij (GB)
+    type: line
+    yaxis_id: disk
+    color: "#546e7a"
+    stroke_width: 2
+    show:
+      legend_value: true
+  - entity: sensor.suneclipse_balies_mem_vrij
+    name: Mem vrij (GB)
+    type: line
+    yaxis_id: mem
+    color: "#43a047"
+    stroke_width: 2
+    show:
+      legend_value: true
+```
+
+**Load (links) en Verzoeken per sec (rechts)**
+
+```yaml
+type: custom:apexcharts-card
+update_interval: 15s
+header:
+  show: true
+  title: Load en verzoeken/sec (laatste 3 uur)
+graph_span: 3h
+span:
+  end: minute
+now:
+  show: true
+  color: "#888888"
+  label: Nu
+yaxis:
+  - id: load
+    decimals: 2
+    min: 0
+    max: 3.5
+  - id: verzoeken
+    opposite: true
+    decimals: 1
+    min: 0
+series:
+  - entity: sensor.suneclipse_balies_load
+    name: Load
+    type: column
+    yaxis_id: load
+    color: "#0292d1"
+    show:
+      legend_value: true
+  - entity: sensor.suneclipse_balies_verzoeken_per_sec
+    name: Verzoeken/sec
+    type: line
+    yaxis_id: verzoeken
+    color: "#7e57c2"
+    stroke_width: 2
+    show:
+      legend_value: true
+```
 
 ## Opmerking over historie
 

@@ -48,6 +48,33 @@ SENSOR_DESCRIPTIONS: tuple[SunEclipseSensorEntityDescription, ...] = (
         suggested_display_precision=2,
         state_class=SensorStateClass.MEASUREMENT,
     ),
+    SunEclipseSensorEntityDescription(
+        key="disk_vrij_gb",
+        name="Disk Vrij",
+        icon="mdi:harddisk",
+        value_key="disk_vrij_gb",
+        native_unit_of_measurement="GB",
+        suggested_display_precision=1,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SunEclipseSensorEntityDescription(
+        key="mem_vrij_gb",
+        name="Mem Vrij",
+        icon="mdi:memory",
+        value_key="mem_vrij_gb",
+        native_unit_of_measurement="GB",
+        suggested_display_precision=1,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SunEclipseSensorEntityDescription(
+        key="verzoeken_per_sec",
+        name="Verzoeken per sec",
+        icon="mdi:swap-horizontal",
+        value_key="verzoeken_per_sec",
+        native_unit_of_measurement="req/s",
+        suggested_display_precision=1,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
 )
 
 
@@ -123,8 +150,15 @@ class SunEclipseSummarySensor(CoordinatorEntity[SunEclipseCoordinator], SensorEn
     def extra_state_attributes(self) -> dict[str, Any]:
         """Expose summary details as attributes."""
         data = self.coordinator.data
-        return {
+        attributes: dict[str, Any] = {
             "balies": data.balies,
             "max_balies": data.max_balies,
             "load": round(data.load, 2),
         }
+        if data.disk_vrij_gb is not None:
+            attributes["disk_vrij_gb"] = round(data.disk_vrij_gb, 1)
+        if data.mem_vrij_gb is not None:
+            attributes["mem_vrij_gb"] = round(data.mem_vrij_gb, 1)
+        if data.verzoeken_per_sec is not None:
+            attributes["verzoeken_per_sec"] = round(data.verzoeken_per_sec, 1)
+        return attributes

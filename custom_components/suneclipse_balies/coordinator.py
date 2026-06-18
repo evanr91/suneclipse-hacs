@@ -29,6 +29,9 @@ class SunEclipseData:
     balies: int
     max_balies: int
     load: float
+    disk_vrij_gb: float | None
+    mem_vrij_gb: float | None
+    verzoeken_per_sec: float | None
 
 
 class SunEclipseCoordinator(DataUpdateCoordinator[SunEclipseData]):
@@ -62,6 +65,19 @@ class SunEclipseCoordinator(DataUpdateCoordinator[SunEclipseData]):
                 balies=int(payload["balies"]),
                 max_balies=int(payload["max-balies"]),
                 load=float(payload["load"]),
+                disk_vrij_gb=_optional_float(payload, "disk_vrij_gb"),
+                mem_vrij_gb=_optional_float(payload, "mem_vrij_gb"),
+                verzoeken_per_sec=_optional_float(
+                    payload, "Verzoeken_per_sec", "verzoeken_per_sec"
+                ),
             )
         except (KeyError, TypeError, ValueError) as err:
             raise UpdateFailed(f"Invalid payload from {self._url}: {err}") from err
+
+
+def _optional_float(payload: dict[str, Any], *keys: str) -> float | None:
+    """Return first matching payload value as float, otherwise None."""
+    for key in keys:
+        if key in payload and payload[key] is not None:
+            return float(payload[key])
+    return None
